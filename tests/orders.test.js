@@ -4,7 +4,6 @@ const orderData = require('../data/order1.json');
 const productTestHelper = require('./test-utils/productTestHelper');
 
 
-
 describe('Orders Module', () => {
  
   let createdProduct;
@@ -44,4 +43,15 @@ describe('get', () =>{
         expect(order._id).toBe(createdOrder._id);   
     })
 })
+
+describe('edit', () => {
+    it('should edit an order', async() => {
+        const change = { status: 'COMPLETED' };
+        const editedOrder = await edit(createdOrder._id, change);
+
+        expect(editedOrder).toBeDefined();
+        expect(editedOrder.status).toBe(change.status);
+    })
+})
+
 });

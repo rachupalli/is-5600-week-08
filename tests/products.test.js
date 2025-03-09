@@ -1,6 +1,6 @@
 const { it } = require('node:test');
-const { mockDb, mockProducts } = require('./db.mock');
-const { list } = require('../products');
+const { mockDb, mockProducts, mockModel } = require('./db.mock');
+const { list, get } = require('../products');
 const productTestHelper = require('./test-utils/productTestHelper');
 
 jest.mock('../db', () => mockDb);
@@ -25,4 +25,14 @@ describe('Product Module', () => {
       expect(products[0].description).toBe('Product 1');
       expect(products[1].description).toBe('Product 2');
     });
-  });
+
+    it('should get a product by id', async () => {
+        // Mock the Product.findById method to return a specific product
+        mockModel.findById = jest.fn().mockResolvedValue({ description: 'Product 1' });
+
+        const products = await get('1234');
+        expect(product.description).toBe('Product 1');
+        expect(mockModel.findById).toHaveBeenCalledWith('1234');
+
+    })
+});
